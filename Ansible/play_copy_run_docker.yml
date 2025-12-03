@@ -1,0 +1,23 @@
+- name: Install Docker
+  hosts: linux
+  become: yes
+  gather_facts: yes
+  
+  tasks:
+    - name: Update system packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: yes
+        cache_valid_time: 3600
+
+    - name: Copy script to target machine
+      ansible.builtin.copy:
+        src: files/get-docker.sh
+        dest: /tmp/get-docker.sh
+        mode: '0777'
+        backup: no
+
+    - name: Execute script with sudo
+      ansible.builtin.command: /tmp/get-docker.sh
+      args:
+        chdir: /tmp

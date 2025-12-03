@@ -1,0 +1,37 @@
+---
+- name: Установка пакетов mc и htop на Linux хосты
+  hosts: "{{ hosts | default('all') }}"
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Обновление кэша пакетов
+      package:
+        update_cache: yes
+      when: ansible_pkg_mgr == 'apt'
+
+    - name: Установка пакетов mc, curl, htop, iftop, iotop
+      package:
+        name:
+          - mc
+          - curl
+          - htop
+          - iftop
+          - iotop
+        state: present
+
+    - name: Установка пакетов python3
+      package:
+        name:
+          - python3
+          - python3-pip
+          - python3-venv
+        state: present
+
+    - name: Установка пакетов nmap, iperf3, screen, rsync
+      package:
+        name:
+          - nmap
+          - iperf3
+          - screen
+          - rsync
+        state: present

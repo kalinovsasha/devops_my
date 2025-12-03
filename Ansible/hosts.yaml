@@ -1,0 +1,36 @@
+---
+# inventory.yml
+all:
+  hosts:
+    server1:
+      ansible_host: 192.168.89.112
+    server2:
+      ansible_host: 192.168.89.113
+    server3:
+      ansible_host: 192.168.89.114
+    rabota:
+      ansible_host: 172.16.9.70
+
+  children:
+    dev:
+      hosts:
+        server1:
+        server2:
+        server3:
+    
+    prod:
+      hosts:
+        rabota:
+    
+#all:
+#  children:
+#    linux:
+#      hosts:
+#        server1:
+#          ansible_host: 192.168.89.112
+#        server2:
+#          ansible_host: 192.168.89.113
+#    ubuntu:
+#      hosts:
+#        ubuntu1:
+#          ansible_host: 192.168.89.114
