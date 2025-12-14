@@ -1,0 +1,38 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s   # Явный таймаут на сбор метрик
+
+scrape_configs:
+  # Сам Prometheus
+  - job_name: "prometheus"
+    scheme: http
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - "localhost:9090"
+        labels:
+          env: "prod"
+          instance: "prometheus-local"
+
+  # Node Exporter
+  - job_name: "node_exporter"
+    scheme: http
+    metrics_path: /metrics
+    scrape_interval: 30s   # Можно задать отдельно для этого job
+    static_configs:
+      - targets:
+          - "192.168.89.115:9100"
+        labels:
+          env: "prod"
+          instance: "node-192.168.89.115"
+
+    relabel_configs:
+      # Явное переименование instance-метки
+      - source_labels: [__address__]
+        target_label: instance
+        regex: "(.*):.*"
+        replacement: "${1}"
+      # Добавление кастомного label
+      - target_label: role
+        replacement: "infra-node"

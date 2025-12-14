@@ -1,0 +1,37 @@
+collectors:
+  enabled:
+    - ad
+    - adcs
+    - adfs
+    - cache
+    - cpu
+    - cpu_info
+    - container
+    - diskdrive
+    - dfsr
+    - dhcp
+    - dns
+    - exchange
+    - file
+    - gpu
+    - iis
+    - logical_disk
+    - memory
+    - net
+    - os
+    - physical_disk
+    - service
+    - smb
+    - smbclient
+    - system
+    - tcp
+    - terminal_services
+
+# Дополнительные параметры
+web:
+  listen_address: ":9182"
+  telemetry_path: "/metrics"
+
+logging:
+  level: info
+  format: logger_eventlog
